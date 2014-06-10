@@ -1,9 +1,35 @@
 body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    padding: 0;
-    margin: 0;
+    font-family: "Helvetica Neue";
+    margin: 0px;
+    padding: 0px;
+    color: #555555;
+    min-width: 320px;
+    background: #FCFCFC url(../images/bg.jpg) repeat;
 }
 
 a {
   color: #00B7FF;
+  display: block;
+}
+
+.container {
+}
+
+.main {
+    position: relative;
+}
+
+.nav {
+    border-radius: 0px !important;
+    padding: 0% 8%;
+}
+
+#menu {
+    position: absolute;
+    top: 0px;
+    left: -250px;
+}
+
+#main {
+    margin-left: 280px;
 }

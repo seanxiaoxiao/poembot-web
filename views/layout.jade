@@ -1,11 +1,36 @@
 doctype html
 html
   head
-    title= title
+    title PoemBot
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', type="text/css", href="/stylesheets/semantic.css")
     script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
     script(src='/javascripts/semantic.js')
 
   body(class="guide")
-    block content
+    div(class="ui transparent inverted menu nav")
+      div(class="container")
+        div(class="title item")
+          b Poem Bot
+        div(class="item")
+          div(class="ui breadcrumb")
+            block breadcrumb
+
+    div#main(class="main container")
+      div#menu(class="ui vertical menu small")
+        div(class="header item")
+          i(class="user icon")
+          词人
+        div(class="menu")
+          a(class="item") 全词人
+          a(class="item") 著名词人
+          a(class="item") 我的收藏
+        div(class="header item")
+          i(class="file icon")
+          词作
+        div(class="menu")
+          a(class="item") 全词牌
+          a(class="item") 高评价
+          a(class="item") 我的收藏
+      div(class="ui grid")
+        block content
