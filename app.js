@@ -4,11 +4,43 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require("mongoose");
+var mongooseAuth = require('mongoose-auth');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var poems = require('./routes/poems');
+
+
+var everyauth = require('everyauth')
+    , Promise = everyauth.Promise;
+
+var UserSchema = new mongoose.Schema({});
+
+UserSchema.plugin(mongooseAuth, {
+    everymodule: {
+        everyauth: {
+            User: function () {
+                return User;
+            }
+        }
+    },
+    password: {
+        loginWith: 'email',
+        everyauth: {
+            getLoginPath: '/?login=1'
+            , postLoginPath: '/login'
+            , getRegisterPath: '/?register=1'
+            , postRegisterPath: '/register'
+            , registerView: 'register.jade'
+            , loginSuccessRedirect: '/'
+            , registerSuccessRedirect: '/'
+        }
+    }
+});
+
+var User = mongoose.model('User', UserSchema);
 
 var db = require("./db");
 
@@ -24,12 +56,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongooseAuth.middleware());
 
 app.use('/', routes);
 app.use('/users', users);
 
 app.get('/poem/:poemId', poems.get);
 app.get('/poem/author/:author', poems.getByAuthor);
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,6 +98,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

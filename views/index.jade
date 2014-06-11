@@ -1,11 +1,28 @@
 extends layout
 
 block breadcrumb
-  a(class="section") &nbsp; 词牌 &nbsp;
-  i(class="right arrow icon divider")
-  a(class="section") &nbsp; 念奴娇 &nbsp;
-  i(class="right arrow icon divider")
-  a(class="section") &nbsp; 念奴娇（苏轼） &nbsp;
+  //a(class="section") &nbsp; 词牌 &nbsp;
+  //i(class="right arrow icon divider")
+  //a(class="section") &nbsp; 念奴娇 &nbsp;
+  //i(class="right arrow icon divider")
+  //a(class="section") &nbsp; 念奴娇（苏轼） &nbsp;
+
+block menu
+    div#menu(class="ui vertical menu small")
+        div(class="header item")
+            i(class="user icon")
+            词人
+        div(class="menu")
+            a(class="item") 全词人
+            a(class="item") 著名词人
+            a(class="item") 我的收藏
+        div(class="header item")
+            i(class="file icon")
+            词作
+        div(class="menu")
+            a(class="item") 全词牌
+            a(class="item") 高评价
+            a(class="item") 我的收藏
 
 block content
   h4(class="ui header") 全词人

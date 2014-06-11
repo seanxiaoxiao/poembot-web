@@ -1,36 +1,95 @@
 doctype html
 html
-  head
-    title PoemBot
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', type="text/css", href="/stylesheets/semantic.css")
-    script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
-    script(src='/javascripts/semantic.js')
+    head
+        title PoemBot
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', type="text/css", href="/stylesheets/semantic.css")
+        script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
+        script(src='/javascripts/semantic.js')
 
-  body(class="guide")
-    div(class="ui transparent inverted menu nav")
-      div(class="container")
-        div(class="title item")
-          b Poem Bot
-        div(class="item")
-          div(class="ui breadcrumb")
-            block breadcrumb
+    body(class="guide")
+        div(class="ui transparent inverted menu nav")
+            div(class="container")
+                div(class="title item")
+                    b Poem Bot
+                div(class="item")
+                    div(class="ui breadcrumb")
+                        block breadcrumb
+                div(class="right menu")
+                    a#login(class="item") 登录
+                    a#register(class="item") 注册
 
-    div#main(class="main container")
-      div#menu(class="ui vertical menu small")
-        div(class="header item")
-          i(class="user icon")
-          词人
-        div(class="menu")
-          a(class="item") 全词人
-          a(class="item") 著名词人
-          a(class="item") 我的收藏
-        div(class="header item")
-          i(class="file icon")
-          词作
-        div(class="menu")
-          a(class="item") 全词牌
-          a(class="item") 高评价
-          a(class="item") 我的收藏
-      div(class="ui grid")
-        block content
+        div#main(class="main container")
+            block menu
+            div(class="ui grid")
+                block content
+
+        div#loginModal(class="ui large modal")
+            i(class="close .icon")
+            div(class="header") 登录
+            div(class="content")
+                div(class="ui form segment")
+                    div(class="field")
+                        label 请输入用户名
+                        div(class="ui left labeled icon input")
+                            input(type="text", placeholder="Username")
+                            i(class="user icon")
+                    div(class="field")
+                        label 请输入密码
+                        div(class="ui left labeled icon input")
+                            input(type="password")
+                            i(class="lock icon")
+                    div(class="ui blue submit button") 登录
+                div(class="ui horizontal divider") 或者
+                div(class="ui five column grid")
+                    div(class="column")
+                    div(class="column")
+                        div(class="ui facebook button small")
+                            i(class="facebook icon")
+                            | Facebook登录
+                    div(class="column")
+                    div(class="column")
+                        div(class="ui google plus button small")
+                            i(class="google plus icon")
+                            | Google 登录
+                    div(class="column")
+
+
+        div#registerModal(class="ui large modal")
+            i(class="close .icon")
+            div(class="header") 注册新用户
+            div(class="content")
+                div(class="ui form segment")
+                    div(class="field")
+                        label 请输入用户名
+                        div(class="ui left labeled icon input")
+                            input(type="text", placeholder="Username")
+                            i(class="user icon")
+                    div(class="field")
+                        label 请输入邮箱地址
+                        div(class="ui left labeled icon input")
+                            input(type="mail", placeholder="Username@xmail.com")
+                            i(class="mail icon")
+                    div(class="field")
+                        label 请输入密码
+                        div(class="ui left labeled icon input")
+                            input(type="password")
+                            i(class="lock icon")
+                    div(class="field")
+                        label 请再次输入密码
+                        div(class="ui left labeled icon input")
+                            input(type="password")
+                            i(class="lock icon")
+            div(class="actions")
+                div(class="ui blue submit button") 注册
+
+
+    script.
+        $("#login").click(function() {
+            $('#loginModal').modal('show');
+        });
+
+
+        $("#register").click(function() {
+            $('#registerModal').modal('show');
+        });
