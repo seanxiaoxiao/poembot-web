@@ -5,42 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
-var mongooseAuth = require('mongoose-auth');
+var session = require('express-session');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var poems = require('./routes/poems');
+var accounts = require('./routes/accounts');
 
+var passport = require('passport');
 
-var everyauth = require('everyauth')
-    , Promise = everyauth.Promise;
-
-var UserSchema = new mongoose.Schema({});
-
-UserSchema.plugin(mongooseAuth, {
-    everymodule: {
-        everyauth: {
-            User: function () {
-                return User;
-            }
-        }
-    },
-    password: {
-        loginWith: 'email',
-        everyauth: {
-            getLoginPath: '/?login=1'
-            , postLoginPath: '/login'
-            , getRegisterPath: '/?register=1'
-            , postRegisterPath: '/register'
-            , registerView: 'register.jade'
-            , loginSuccessRedirect: '/'
-            , registerSuccessRedirect: '/'
-        }
-    }
-});
-
-var User = mongoose.model('User', UserSchema);
+require('./conf/passport')(passport); // pass passport for configuration
 
 var db = require("./db");
 
@@ -56,14 +29,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(mongooseAuth.middleware());
+app.use(session({ secret: 'iamtheironhandsofjustice' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
-app.use('/users', users);
 
 app.get('/poem/:poemId', poems.get);
 app.get('/poem/author/:author', poems.getByAuthor);
 
+app.post('/register', passport.authenticate('local-signup', {
+    successRedirect : '/', // redirect to the secure profile section
+    failureRedirect : '/registerFailure', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
+app.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/', // redirect to the secure profile section
+    failureRedirect : '/loginFailure', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

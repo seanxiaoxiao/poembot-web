@@ -16,8 +16,13 @@ html
                     div(class="ui breadcrumb")
                         block breadcrumb
                 div(class="right menu")
-                    a#login(class="item") 登录
-                    a#register(class="item") 注册
+                    if (!user)
+                        a#login(class="item") 登录
+                        a#register(class="item") 注册
+                    if (user)
+                        div(class="item")
+                            b #{user.local.username}
+                        a(href="/logout", class="item") Logout
 
         div#main(class="main container")
             block menu
@@ -32,14 +37,14 @@ html
                     div(class="field")
                         label 请输入用户名
                         div(class="ui left labeled icon input")
-                            input(type="text", placeholder="Username")
+                            input#loginEmail(type="mail", placeholder="Username@xmail.com")
                             i(class="user icon")
                     div(class="field")
                         label 请输入密码
                         div(class="ui left labeled icon input")
-                            input(type="password")
+                            input#loginPassword(type="password")
                             i(class="lock icon")
-                    div(class="ui blue submit button") 登录
+                    div#loginSubmit(class="ui blue submit button") 登录
                 div(class="ui horizontal divider") 或者
                 div(class="ui five column grid")
                     div(class="column")
@@ -63,26 +68,24 @@ html
                     div(class="field")
                         label 请输入用户名
                         div(class="ui left labeled icon input")
-                            input(type="text", placeholder="Username")
+                            input#registerUsername(type="text", placeholder="Username")
                             i(class="user icon")
                     div(class="field")
                         label 请输入邮箱地址
                         div(class="ui left labeled icon input")
-                            input(type="mail", placeholder="Username@xmail.com")
+                            input#registerEmail(type="mail", placeholder="Username@xmail.com")
                             i(class="mail icon")
                     div(class="field")
                         label 请输入密码
                         div(class="ui left labeled icon input")
-                            input(type="password")
+                            input#registerPassword(type="password")
                             i(class="lock icon")
                     div(class="field")
                         label 请再次输入密码
                         div(class="ui left labeled icon input")
                             input(type="password")
                             i(class="lock icon")
-            div(class="actions")
-                div(class="ui blue submit button") 注册
-
+                    div#registerSubmit(class="ui blue submit button") 注册
 
     script.
         $("#login").click(function() {
@@ -92,4 +95,44 @@ html
 
         $("#register").click(function() {
             $('#registerModal').modal('show');
+        });
+
+        $("#loginSubmit").click(function() {
+            var email = $("#loginEmail").val();
+            var password = $("#loginPassword").val();
+
+            $.ajax({
+                type: "post",
+                url: "/login",
+                data: {
+                    email: email,
+                    password: password,
+                },
+                success: function() {
+                    location.reload();
+                },
+                error: function(xhr, status, err) {
+                }
+            });
+        });
+
+        $("#registerSubmit").click(function() {
+            var username = $("#registerUsername").val();
+            var password = $("#registerPassword").val();
+            var email = $("#registerEmail").val();
+
+            $.ajax({
+                type: "post",
+                url: "/register",
+                data: {
+                    username: username,
+                    password: password,
+                    email: email
+                },
+                success: function() {
+                    location.reload();
+                },
+                error: function(xhr, status, err) {
+                }
+            });
         });

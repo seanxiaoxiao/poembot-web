@@ -2,7 +2,7 @@
  * Created by xiaoxiao on 5/26/14.
  */
 
-var Poem = require("../models/poem.js");
+var Poem = require("../models/poem");
 
 exports.get = function(req, res) {
     var poemId = req.params.poemId;

@@ -15,7 +15,9 @@
     "jade": "~1.3.0",
     "mongoose": "*",
     "mongodb": "*",
-    "mongoose-auth": "*",
-    "everyauth": "*"
+    "bcrypt-nodejs": "*",
+    "express-session": "*",
+    "passport": "*",
+    "passport-local-mongoose": "*"
   }
 }

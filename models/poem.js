@@ -10,7 +10,6 @@ var PoemSchema = mongoose.Schema({
     contents: [String]
 });
 
-
 var Poem = mongoose.model("poems", PoemSchema);
 
 module.exports = Poem;
