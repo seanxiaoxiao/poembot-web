@@ -9,6 +9,7 @@ var session = require('express-session');
 
 var routes = require('./routes/index');
 var poems = require('./routes/poems');
+var authors = require('./routes/authors');
 var accounts = require('./routes/accounts');
 
 var passport = require('passport');
@@ -36,7 +37,7 @@ app.use(passport.session());
 app.use('/', routes);
 
 app.get('/poem/:poemId', poems.get);
-app.get('/poem/author/:author', poems.getByAuthor);
+app.get('/author/:authorId', authors.poemByAuthor);
 
 app.post('/register', passport.authenticate('local-signup', {
     successRedirect : '/', // redirect to the secure profile section

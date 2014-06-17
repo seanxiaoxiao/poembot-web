@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var PoemSchema = mongoose.Schema({
     template: String,
     title: String,
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "Author" },
     contents: [String]
 });
 

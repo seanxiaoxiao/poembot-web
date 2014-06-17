@@ -18,6 +18,6 @@ exports.getByAuthor = function(req, res) {
     if (!author) return res.send(400, "Author name is required");
     Poem.find({author: author}).exec(function(err, poems) {
         if (err) return res.send(500, err);
-        res.send(200, poems);
+        res.render('poemByAuthor', { user : req.user, poems: poems });
     });
 }
