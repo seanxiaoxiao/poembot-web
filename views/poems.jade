@@ -1,0 +1,22 @@
+//
+   Created by xiaoxiao on 6/17/14.
+
+extends layout
+
+block content
+    h1(class="ui header") #{ title }
+    div(class="ui vertically divided grid")
+        each poem in poems
+            div(class="column row")
+                div(class="column center aligned")
+                    div(class="ui segment")
+                        if poem.title
+                            h3
+                                a(class="item" href="/poem/#{ poem._id }") #{ poem.template.name } - #{ poem.title }
+                        if !poem.title
+                            h3
+                                a(class="item" href="/poem/#{ poem._id }") #{ poem.template.name }
+                        h5
+                            a(class="item" href="/author/#{ poem.author._id }") #{ poem.author.name }
+                        - for (var i = 0; i < poem.contents.length; i ++)
+                            p #{ poem.contents[i] }

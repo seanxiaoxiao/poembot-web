@@ -2,6 +2,8 @@
  * Created by xiaoxiao on 5/26/14.
  */
 
+
+var Author = require("../models/author");
 var Poem = require("../models/poem");
 
 exports.get = function(req, res) {
@@ -16,7 +18,7 @@ exports.get = function(req, res) {
 exports.getByAuthor = function(req, res) {
     var author = req.params.author;
     if (!author) return res.send(400, "Author name is required");
-    Poem.find({author: author}).populate("template").exec(function(err, poems) {
+    Poem.find({author: author}).populate("template").populate("author").exec(function(err, poems) {
         if (err) return res.send(500, err);
         res.render('poemByAuthor', { user : req.user, poems: poems });
     });

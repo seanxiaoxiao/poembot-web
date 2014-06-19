@@ -11,6 +11,7 @@ var routes = require('./routes/index');
 var poems = require('./routes/poems');
 var authors = require('./routes/authors');
 var accounts = require('./routes/accounts');
+var templates = require('./routes/templates');
 
 var passport = require('passport');
 
@@ -39,6 +40,8 @@ app.use(passport.session());
 app.get('/', authors.famous);
 
 app.get('/poem/:poemId', poems.get);
+app.get('/template/all', templates.all);
+app.get('/template/:templateId', templates.poemByTemplate);
 app.get('/author/all', authors.all);
 app.get('/author/:authorId', authors.poemByAuthor);
 

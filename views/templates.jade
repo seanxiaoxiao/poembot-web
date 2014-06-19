@@ -1,0 +1,27 @@
+//
+   Created by xiaoxiao on 6/18/14.
+
+extends layout
+block breadcrumb
+
+block content
+    h1(class="ui header") 全词牌
+    div(class="ui vertically divided grid")
+        - for (var i = 0; i < templates.length; i += 4)
+            div(class="four column row")
+                div(class="column center aligned")
+                    if templates[i]
+                        p
+                            a(class="item" href="/template/#{ templates[i]._id }") #{ templates[i].name }
+                div(class="column center aligned")
+                    if templates[i+1]
+                        p
+                            a(class="item" href="/template/#{ templates[i + 1]._id }") #{ templates[i + 1].name }
+                div(class="column center aligned")
+                    if templates[i+2]
+                        p
+                            a(class="item" href="/template/#{ templates[i + 2]._id }") #{ templates[i + 2].name }
+                div(class="column center aligned")
+                    if templates[i+3]
+                        p
+                            a(class="item" href="/template/#{ templates[i + 3]._id }") #{ templates[i + 3].name }
