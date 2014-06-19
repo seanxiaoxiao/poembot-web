@@ -34,9 +34,12 @@ app.use(session({ secret: 'iamtheironhandsofjustice' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', routes);
+//app.use('/', routes);
+
+app.get('/', authors.famous);
 
 app.get('/poem/:poemId', poems.get);
+app.get('/author/all', authors.all);
 app.get('/author/:authorId', authors.poemByAuthor);
 
 app.post('/register', passport.authenticate('local-signup', {

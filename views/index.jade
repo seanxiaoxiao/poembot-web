@@ -14,35 +14,17 @@ block content
             div(class="four column row")
                 div(class="column center aligned")
                     if authors[i]
-                        p #{ authors[i].name }
+                        p
+                            a(class="item" href="/author/#{ authors[i]._id }") #{ authors[i].name }
                 div(class="column center aligned")
                     if authors[i+1]
-                        p #{ authors[i+1].name }
+                        p
+                            a(class="item" href="/author/#{ authors[i + 1]._id }") #{ authors[i + 1].name }
                 div(class="column center aligned")
                     if authors[i+2]
-                        p #{ authors[i+2].name }
+                        p
+                            a(class="item" href="/author/#{ authors[i + 2]._id }") #{ authors[i + 2].name }
                 div(class="column center aligned")
                     if authors[i+3]
-                        p #{ authors[i+3].name }
-
-        //  div(class="row")
-  //    div(class="column")
-  //      p
-  //      声声慢
-  //    div(class="column")
-  //      p
-  //      如梦令
-  //    div(class="column")
-  //      p
-  //    div(class="column")
-  //      p
-  //  div(class="row")
-  //    div(class="column")
-  //      p
-  //      声声慢
-  //    div(class="column")
-  //      p
-  //    div(class="column")
-  //      p
-  //    div(class="column")
-  //      p
+                        p
+                            a(class="item" href="/author/#{ authors[i + 3]._id }") #{ authors[i + 3].name }

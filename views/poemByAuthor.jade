@@ -9,4 +9,7 @@ block content
         each poem in poems
             div(class="column row")
                 div(class="column center aligned")
-                    p #{ poem }
+                    div(class="ui piled segment")
+                        h4 #{ poem.title }
+                        - for (var i = 0; i < poem.contents.length; i ++)
+                            p #{ poem.contents[i] }
