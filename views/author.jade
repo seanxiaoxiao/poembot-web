@@ -1,0 +1,25 @@
+extends layout
+
+block breadcrumb
+
+block content
+    h1(class="ui header") #{ title }
+    div(class="ui vertically divided grid")
+        - for (var i = 0; i < authors.length; i += 4)
+            div(class="four column row")
+                div(class="column center aligned")
+                    if authors[i]
+                        p
+                            a(class="item" href="/author/#{ authors[i]._id }") #{ authors[i].name }
+                div(class="column center aligned")
+                    if authors[i+1]
+                        p
+                            a(class="item" href="/author/#{ authors[i + 1]._id }") #{ authors[i + 1].name }
+                div(class="column center aligned")
+                    if authors[i+2]
+                        p
+                            a(class="item" href="/author/#{ authors[i + 2]._id }") #{ authors[i + 2].name }
+                div(class="column center aligned")
+                    if authors[i+3]
+                        p
+                            a(class="item" href="/author/#{ authors[i + 3]._id }") #{ authors[i + 3].name }

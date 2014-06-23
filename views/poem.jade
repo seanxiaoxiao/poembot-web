@@ -1,0 +1,57 @@
+//
+   Created by xiaoxiao on 6/18/14.
+
+extends layout
+block content
+    div(class="ui vertically divided grid")
+        div(class="row")
+            div(class="column center aligned")
+                div(class="ui segment")
+                    if poem.title
+                        h3 #{ poem.template.name } - #{ poem.title }
+                    if !poem.title
+                        h3 #{ poem.template.name }
+                    h5 #{ poem.author.name }
+                    - for (var i = 0; i < poem.contents.length; i ++)
+                        p #{ poem.contents[i] }
+
+        if comments
+            div(class="row")
+                div(class="column")
+                    div(class="ui segement")
+                        h4(class="ui header") 评论
+                        each comment in comments
+                            div.ui.comments
+                                div.comment
+                                    div.content
+                                        a.author #{ comment.account.local.username }
+                                        div.text #{ comment.content }
+        div(class="row")
+            div(class="column")
+                div.ui.reply.form
+                    .field
+                        if (!user)
+                            textarea#content(disabled="disabled", placeholder="登陆后发表评论")
+                        if (user)
+                            textarea#content
+                    div#commentSubmit.ui.button.teal.submit.labeled.icon
+                        i.icon.edit
+                        | 添加评论
+
+
+    script.
+        $("#commentSubmit").click(function() {
+            var content = $("#content").val();
+            $.ajax({
+                type: "post",
+                url: "/poem/#{ poem._id }/postComment",
+                data: {
+                    content: content,
+                },
+                success: function() {
+                    location.reload();
+                },
+                error: function(xhr, status, err) {
+                }
+            });
+        });

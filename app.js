@@ -36,13 +36,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //app.use('/', routes);
-
-app.get('/', authors.famous);
-
+app.get('/', poems.daily);
 app.get('/poem/:poemId', poems.get);
+app.post('/poem/:poemId/postComment', poems.postComment);
 app.get('/template/all', templates.all);
 app.get('/template/:templateId', templates.poemByTemplate);
 app.get('/author/all', authors.all);
+app.get('/author/famous', authors.famous);
 app.get('/author/:authorId', authors.poemByAuthor);
 
 app.post('/register', passport.authenticate('local-signup', {
@@ -78,6 +78,7 @@ db.connect("mongodb://localhost/poembot", function() {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+        console.log(err);
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,

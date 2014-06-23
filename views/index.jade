@@ -1,30 +1,21 @@
 extends layout
 
 block breadcrumb
-  //a(class="section") &nbsp; 词牌 &nbsp;
-  //i(class="right arrow icon divider")
-  //a(class="section") &nbsp; 念奴娇 &nbsp;
-  //i(class="right arrow icon divider")
-  //a(class="section") &nbsp; 念奴娇（苏轼） &nbsp;
 
 block content
-    h1(class="ui header") #{ title }
+    h1(class="ui header") 每日一词
     div(class="ui vertically divided grid")
-        - for (var i = 0; i < authors.length; i += 4)
-            div(class="four column row")
+        div(class="ui vertically divided grid")
+            div(class="row")
                 div(class="column center aligned")
-                    if authors[i]
-                        p
-                            a(class="item" href="/author/#{ authors[i]._id }") #{ authors[i].name }
-                div(class="column center aligned")
-                    if authors[i+1]
-                        p
-                            a(class="item" href="/author/#{ authors[i + 1]._id }") #{ authors[i + 1].name }
-                div(class="column center aligned")
-                    if authors[i+2]
-                        p
-                            a(class="item" href="/author/#{ authors[i + 2]._id }") #{ authors[i + 2].name }
-                div(class="column center aligned")
-                    if authors[i+3]
-                        p
-                            a(class="item" href="/author/#{ authors[i + 3]._id }") #{ authors[i + 3].name }
+                    div(class="ui segment")
+                        if poem.title
+                            h3
+                                a(class="item" href="/poem/#{ poem._id }") #{ poem.template.name } - #{ poem.title }
+                        if !poem.title
+                            h3
+                                a(class="item" href="/poem/#{ poem._id }") #{ poem.template.name }
+                        h5
+                            a(class="item" href="/author/#{ poem.author._id }") #{ poem.author.name }
+                        - for (var i = 0; i < poem.contents.length; i ++)
+                            p #{ poem.contents[i] }

@@ -1,7 +1,7 @@
 doctype html
 html
     head
-        title PoemBot
+        title 肖老板的宋词网站
         link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel='stylesheet', type="text/css", href="/stylesheets/semantic.css")
         script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js')
@@ -11,7 +11,7 @@ html
         div(class="ui transparent inverted menu nav")
             div(class="container")
                 div(class="title item")
-                    b 肖老板的宋词网站
+                    a(href="/") 肖老板的宋词网站
                 div(class="item")
                     div(class="ui breadcrumb")
                         block breadcrumb
@@ -30,8 +30,8 @@ html
                     i(class="user icon")
                     | 词人
                 div(class="menu")
+                    a(class="item" href="/author/famous") 著名词人
                     a(class="item" href="/author/all") 全词人
-                    a(class="item" href="/") 著名词人
                     //a(class="item") 我的收藏
                 div(class="header item")
                     i(class="file icon")

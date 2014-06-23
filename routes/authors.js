@@ -21,13 +21,13 @@ exports.poemByAuthor = function(req, res) {
 exports.famous = function(req, res) {
     Author.find({name: {$in: conf.famousAuthors}}).sort({ name: 1 }).exec(function(err, authors) {
         if (err) return res.send(500, err);
-        res.render('index', { user: req.user, authors: authors, title: "著名词人" });
+        res.render('author', { user: req.user, authors: authors, title: "著名词人" });
     });
 };
 
 exports.all = function(req, res) {
     Author.find({name: {$ne: ""} }).sort({ name: 1 }).exec(function(err, authors) {
         if (err) return res.send(500, err);
-        res.render('index', { user : req.user, authors: authors, title: "全词人" });
+        res.render('author', { user : req.user, authors: authors, title: "全词人" });
     });
 };
