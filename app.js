@@ -47,15 +47,21 @@ app.get('/author/all', authors.all);
 app.get('/author/famous', authors.famous);
 app.get('/author/:authorId', authors.poemByAuthor);
 
-app.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/', // redirect to the secure profile section
-    failureRedirect : '/registerFailure', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-}));
+app.post('/register', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+        if (err) { return next(err); }
+        if (info && info.error) {
+            return res.send(409, info);
+        }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+});
 
 app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/', // redirect to the secure profile section
-    failureRedirect : '/loginFailure', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
 

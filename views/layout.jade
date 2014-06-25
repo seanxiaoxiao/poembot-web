@@ -78,7 +78,10 @@ html
             i(class="close .icon")
             div(class="header") 注册新用户
             div(class="content")
-                div(class="ui form segment")
+                div#registerForm(class="ui form segment")
+                    div.ui.error.message
+                        div.header 注册失败
+                        p#errorMessage
                     div(class="field")
                         label 请输入用户名
                         div(class="ui left labeled icon input")
@@ -97,7 +100,7 @@ html
                     div(class="field")
                         label 请再次输入密码
                         div(class="ui left labeled icon input")
-                            input(type="password")
+                            input#registerRePassword(type="password")
                             i(class="lock icon")
                     div#registerSubmit(class="ui blue submit button") 注册
 
@@ -131,9 +134,42 @@ html
         });
 
         $("#registerSubmit").click(function() {
+            clearError();
+            var errorOccur = false;
             var username = $("#registerUsername").val();
-            var password = $("#registerPassword").val();
+            if (!username) {
+                applyError($("#registerUsername").parent());
+                appleyErrorMessage($("#registerUsername").parent(), "请输入用户名");
+                errorOccur = true;
+            }
             var email = $("#registerEmail").val();
+            if (!email) {
+                applyError($("#registerEmail").parent());
+                appleyErrorMessage($("#registerEmail").parent(), "请输入用户邮箱");
+                errorOccur = true;
+            }
+            var password = $("#registerPassword").val();
+            if (!password) {
+                applyError($("#registerPassword").parent());
+                appleyErrorMessage($("#registerPassword").parent(), "请输入密码");
+                errorOccur = true;
+            }
+            var rePassword = $("#registerRePassword").val();
+            if (!rePassword) {
+                applyError($("#registerRePassword").parent());
+                appleyErrorMessage($("#registerRePassword").parent(), "请再次输入密码");
+                errorOccur = true;
+            }
+            if (errorOccur) {
+                return;
+            }
+
+            if (password != rePassword) {
+                applyError($("#registerPassword").parent());
+                applyError($("#registerRePassword").parent());
+                appleyErrorMessage($("#registerPassword").parent(), "请检查两处密码是否相同");
+                appleyErrorMessage($("#registerRePassword").parent(), "请检查两处密码是否相同");
+            }
 
             $.ajax({
                 type: "post",
@@ -147,9 +183,31 @@ html
                     location.reload();
                 },
                 error: function(xhr, status, err) {
+                    $("#registerForm").addClass("error");
+                    $("#registerForm").find(".message").addClass("error");
+                    var response = eval("(" + xhr.responseText + ")");
+                    $("#errorMessage").text(response.error);
                 }
             });
         });
+
+        function clearError() {
+            $("#errorMessage").text("");
+            $(".error").removeClass("error");
+            $("#registerForm").find(".message").addClass("error");
+            $(".pointing").remove();
+        }
+
+        function applyError(element) {
+            element.addClass("error");
+        }
+
+        function appleyErrorMessage(element, message) {
+            var errorDiv = $("<div>");
+            errorDiv.addClass("ui").addClass("red").addClass("pointing").addClass("above").addClass("label");
+            errorDiv.text(message);
+            element.append(errorDiv);
+        }
 
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

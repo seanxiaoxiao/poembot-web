@@ -32,7 +32,7 @@ module.exports = function(passport) {
                         }
 
                         if (account) {
-                            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                            return done(null, false, { error: '这个账号已经被使用了' });
                         } else {
                             var newAccount = new Account();
                             newAccount.local.username = req.body.username;
