@@ -12,6 +12,7 @@ var poems = require('./routes/poems');
 var authors = require('./routes/authors');
 var accounts = require('./routes/accounts');
 var templates = require('./routes/templates');
+var flash = require('connect-flash');
 
 var passport = require('passport');
 
@@ -34,9 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'iamtheironhandsofjustice' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 //app.use('/', routes);
-app.get('/', poems.daily);
+app.get('/', authors.famous);
 app.get('/poem/:poemId', poems.get);
 app.post('/poem/:poemId/postComment', poems.postComment);
 app.get('/template/all', templates.all);
@@ -69,7 +71,7 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-db.connect("mongodb://localhost/poembot", function() {
+db.connect("mongodb://ec2-54-215-15-1.us-west-1.compute.amazonaws.com/poembot", function() {
 
 });
 /// error handlers
